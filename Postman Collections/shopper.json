@@ -1,0 +1,590 @@
+{
+	"info": {
+		"_postman_id": "1135d935-3fda-4702-bcc7-8762bfc11ac8",
+		"name": "Shopper",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "ShopperLogin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e46576ea-126f-43bd-866f-2cb7840978ca",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"pm.test(\"Email address\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data.emil).to.eql();\r",
+									"pm.globals.get(\"Shopper_email\");\r",
+									"});\r",
+									"body=JSON.parse(responseBody)\r",
+									"pm.globals.set(\"shopperID\",body.data.userId);\r",
+									"pm.globals.set(\"token\", body.data.jwtToken);\r",
+									"\r",
+									"//body1=pm.response.json();\r",
+									"\r",
+									"//console.log(body);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "73cbd1b5-0c70-495b-9431-18479a41f32f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{Shopper_email}}\",\r\n  \"password\": \"{{Shopper_pwd}}\",\r\n  \"role\": \"SHOPPER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{ShopperStack_URL}}/users/login"
+					},
+					"response": []
+				}
+			],
+			"id": "f4072efa-63ab-4a46-801f-1567b4ff1d0b"
+		},
+		{
+			"name": "ViewProduct",
+			"item": [
+				{
+					"name": "viewAllTheProducts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0b23215b-24da-4c8e-b25b-15f29f47ad2d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"body=JSON.parse(responseBody);\r",
+									"pm.globals.set(\"productId\", body.data[0].productId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "b8f95ad4-c2bc-4ce5-8f3a-a9173ddd1d3b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": "{{ShopperStack_URL}}/products/alpha"
+					},
+					"response": []
+				}
+			],
+			"id": "f1ba48aa-7b1d-4f8d-8d88-e9b5948e55bf"
+		},
+		{
+			"name": "Wishlist",
+			"item": [
+				{
+					"name": "addProductToWishlist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1129ceff-8313-4e20-ba16-407676738071",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "d80682aa-fc0f-4909-8837-022651ad3e03",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"productId\": {{productId}},\r\n  \"quantity\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{ShopperStack_URL}}/shoppers/{{shopperID}}/wishlist"
+					},
+					"response": []
+				},
+				{
+					"name": "getProductFromWishlist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c6a4985-04a5-4d71-ae0e-39ae38490540",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "16e181ba-e577-4b52-835f-0a6c518b22c6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{ShopperStack_URL}}/shoppers/{{shopperID}}/wishlist"
+					},
+					"response": []
+				}
+			],
+			"id": "c0cd616e-097f-4eda-a857-da044f0e1c6d"
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "addProductToCart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "636a57e2-0f46-495f-b84a-70780f60e4cb",
+								"exec": [
+									"body=JSON.parse(responseBody);\r",
+									"pm.globals.set(\"itemId\", body.data.itemId);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "99155bfb-7728-49e7-bed7-154159997201",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"productId\": {{productId}},\r\n  \"quantity\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{ShopperStack_URL}}/shoppers/{{shopperID}}/carts"
+					},
+					"response": []
+				},
+				{
+					"name": "getProductFromCart",
+					"id": "af24b9be-bef9-4d2c-991b-53039a588df9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{ShopperStack_URL}}/shoppers/{{shopperID}}/carts"
+					},
+					"response": []
+				},
+				{
+					"name": "updateProductInCart",
+					"id": "bb095564-6421-4d16-a01c-892f6289553d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"productId\": {{productId}},\r\n  \"quantity\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{ShopperStack_URL}}/shoppers/{{shopperID}}/carts/{{itemId}}"
+					},
+					"response": []
+				}
+			],
+			"id": "86e9ed5a-37ba-4ebf-a862-6cf5df2fb78d"
+		},
+		{
+			"name": "Address",
+			"item": [
+				{
+					"name": "addAddress",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "61a56134-f563-4878-8e56-05a10fd3e04f",
+								"exec": [
+									"body= JSON.parse(responseBody);\r",
+									"pm.globals.set(\"addressId\", body.data.addressId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "fb002fa8-ac78-4c59-9109-4d637f45e069",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"addressId\": 0,\r\n  \"buildingInfo\": \"Plaza\",\r\n  \"city\": \"Blore\",\r\n  \"country\": \"India\",\r\n  \"landmark\": \"Postoffice\",\r\n  \"name\": \"Zutti\",\r\n  \"phone\": \"9876543213\",\r\n  \"pincode\": \"560010\",\r\n  \"state\": \"Karnataka\",\r\n  \"streetInfo\": \"!4 cross\",\r\n  \"type\": \"Home\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{ShopperStack_URL}}/shoppers/{{shopperID}}/address"
+					},
+					"response": []
+				}
+			],
+			"id": "c0fefc4e-5a2a-4412-9028-0eb4351085e9"
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "placeOrder",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8eaae1b7-ea5d-4747-9c0a-b1394d5eca4c",
+								"exec": [
+									"body=JSON.parse(responseBody);\r",
+									"pm.globals.set(\"orderId\", body.data.orderId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "6eca2a51-e833-4f92-b38d-0d085de7195c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"address\": {\r\n    \"addressId\": {{addressId}},\r\n    \"buildingInfo\": \"string\",\r\n    \"city\": \"string\",\r\n    \"country\": \"string\",\r\n    \"landmark\": \"string\",\r\n    \"name\": \"string\",\r\n    \"phone\": \"string\",\r\n    \"pincode\": \"string\",\r\n    \"state\": \"string\",\r\n    \"streetInfo\": \"string\",\r\n    \"type\": \"string\"\r\n  },\r\n  \"paymentMode\": \"COD\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{ShopperStack_URL}}/shoppers/{{shopperID}}/orders"
+					},
+					"response": []
+				},
+				{
+					"name": "orderHistory",
+					"id": "1979b0ae-1d5d-40ff-8014-d59bb2a70504",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{ShopperStack_URL}}/shoppers/{{shopperID}}/orders"
+					},
+					"response": []
+				},
+				{
+					"name": "updateStatus",
+					"id": "c8466706-8413-4c01-a395-810c6a256ee2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{ShopperStack_URL}}/shoppers/{{shopperID}}/orders/{{orderId}}?status=DELIVERED",
+							"host": [
+								"{{ShopperStack_URL}}"
+							],
+							"path": [
+								"shoppers",
+								"{{shopperID}}",
+								"orders",
+								"{{orderId}}"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "DELIVERED"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "generateInvoice",
+					"id": "1025aeae-b71a-4f49-864a-33ab1b71cc70",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{ShopperStack_URL}}/shoppers/{{shopperID}}/orders/{{orderId}}/invoice"
+					},
+					"response": []
+				}
+			],
+			"id": "5d141cd7-140d-42c1-af7e-20ed3744fa4a"
+		},
+		{
+			"name": "Review",
+			"item": [
+				{
+					"name": "addReview",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "13613d71-b6cd-4a5e-a74e-386ce10cbb13",
+								"exec": [
+									"body=JSON.parse(responseBody);\r",
+									"pm.globals.set(\"reviewId\", body.data.reviewId);\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "5f2d419d-eb3e-43b7-ab54-384dbe6dd12a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"description\": \"product is good for the given price\",\r\n  \"heading\": \"Good product\",\r\n  \"rating\": 3,\r\n  \"shopperId\": {{shopperID}},\r\n  \"shopperName\": \"NehaZutti\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ShopperStack_URL}}/reviews?productId={{productId}}",
+							"host": [
+								"{{ShopperStack_URL}}"
+							],
+							"path": [
+								"reviews"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "{{productId}}",
+									"type": "text"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllReviews",
+					"id": "250df625-97fb-4fed-9922-70a5a6851514",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{ShopperStack_URL}}/reviews/{{productId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "updateReview",
+					"id": "c5b68454-63ac-4177-91e0-c711626e3715",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"description\": \"good product\",\r\n  \"heading\": \"good product\",\r\n  \"rating\": 3.5,\r\n  \"shopperId\": {{shopperID}},\r\n  \"shopperName\": \"NehaZutti\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ShopperStack_URL}}/reviews/{{reviewId}}?productId={{productId}}",
+							"host": [
+								"{{ShopperStack_URL}}"
+							],
+							"path": [
+								"reviews",
+								"{{reviewId}}"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "{{productId}}",
+									"type": "text"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteReview",
+					"id": "e8166166-21d4-4bab-a7c9-8df42f495f65",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ShopperStack_URL}}/reviews/{{reviewId}}?productId={{productId}}",
+							"host": [
+								"{{ShopperStack_URL}}"
+							],
+							"path": [
+								"reviews",
+								"{{reviewId}}"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "{{productId}}",
+									"type": "text"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "17c1d104-d7df-4a80-8fe6-0b838d24ad73"
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "{{token}}"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "548fe50d-b564-4d04-9761-0e76b87aa9de",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "997cf21c-da75-402b-b98e-1fae5476f539",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
