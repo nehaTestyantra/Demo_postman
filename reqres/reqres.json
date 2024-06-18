@@ -85,7 +85,7 @@
 			"response": []
 		},
 		{
-			"name": "req3",
+			"name": "Request3",
 			"id": "c58d4752-3c14-431a-9fc4-dcb83df95a5a",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
