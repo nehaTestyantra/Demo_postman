@@ -1,0 +1,457 @@
+{
+	"info": {
+		"_postman_id": "cdca6db2-5c16-4215-a137-92bb4063b107",
+		"name": "reqressss",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "createData",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "870b2785-692a-4775-8fe0-c91e552be904",
+						"exec": [
+							"var ran=Math.floor(Math.random()*500);\r",
+							"console.log(ran);\r",
+							"pm.variables.set(\"random\", ran);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d4c1c7d4-ed09-4ebf-9250-6523dd8cf753",
+						"exec": [
+							"pm.test(\"tc pass\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(800);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "40a9d456-be9b-4ca4-bead-6d4026d0d320",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "neha---{{random}}",
+							"type": "text"
+						},
+						{
+							"key": "job",
+							"value": "qa",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{BaseUrl}}/api/users"
+			},
+			"response": []
+		},
+		{
+			"name": "getListUsers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "66fddb94-3f27-4687-9d98-61f32db1d422",
+						"exec": [
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data[0].id).to.eql(7);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "5bc5b48d-ee22-4305-bee6-0e5c21634407",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users?page=2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateUser",
+			"id": "874bd430-f199-415b-8523-9d9d48159ee1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"sachin--{{random}}\",\r\n    \"job\": \"zion resident\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://reqres.in/api/users/2"
+			},
+			"response": []
+		},
+		{
+			"name": "deleteUser",
+			"id": "348d905d-a58f-4b85-8871-31e24f87ff24",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "https://reqres.in/api/users/2"
+			},
+			"response": []
+		},
+		{
+			"name": "createUserWithJsonFile",
+			"id": "9ad662ca-a783-4d53-be31-03d9a8198b50",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": "/C:/Users/NEHA ZUTTI/OneDrive/Desktop/neha.json"
+					}
+				},
+				"url": "{{url}}/api/users"
+			},
+			"response": []
+		},
+		{
+			"name": "createUserWithFormData",
+			"id": "9d50879b-c4d2-42ca-81e0-6b37f04f1993",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{url}}/api/users"
+			},
+			"response": []
+		},
+		{
+			"name": "DDT",
+			"id": "a7e2e23a-c5d0-46b7-980e-0b2a949e2ba9",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"job\": \"{{job}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://reqres.in/api/users"
+			},
+			"response": []
+		},
+		{
+			"name": "pathParameter",
+			"id": "3088a437-4d41-42bc-a82e-869f3423f9f0",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users/:{uid}",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						":{uid}"
+					],
+					"variable": [
+						{
+							"key": "{uid}",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "queryParameter",
+			"id": "1765caa6-c1e0-4999-a31c-1fbf55c06a3b",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users?page=2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listOfUserForRequestChaining",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "129416a5-137d-4e7f-b73d-e480cd8ea9d4",
+						"exec": [
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var uid=jsonData.data[1].id;\r",
+							"\r",
+							"    console.log(uid);\r",
+							"\r",
+							"\r",
+							"   // pm.collectionVariables.set(\"user_id\", uid);\r",
+							"\r",
+							"    pm.globals.set(\"userId\", uid);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "a5910d57-c1fe-4f72-ad0f-954a7beae254",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users?page=2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getSingleUserForRequestChaining",
+			"id": "297d1f1b-5118-401d-82c5-52a5f24a8cf8",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaG9wcGVybmV3bmVoYTEyM0BnbWFpbC5jb20gU0hPUFBFUiIsImV4cCI6MTcwODQ2MjQ2MCwiaWF0IjoxNzA4NDI2NDYwfQ.YheJfjEej7Puxrqf4pilnCxdw4ldROuxblZp5Pi42X4"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users/:{u}",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						":{u}"
+					],
+					"variable": [
+						{
+							"key": "{u}",
+							"value": "{{userId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bearerToken",
+			"id": "3c1c684f-4f64-48dc-b9ad-263208810a75",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": {
+						"addTokenTo": "header"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"neha-api\",\r\n    \"description\":\"api framework\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://api.github.com/user/repos"
+			},
+			"response": []
+		},
+		{
+			"name": "oauth2.0",
+			"id": "c80eb2e4-0667-4ab2-9908-d1cc20cf25cb",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": {
+						"scope": "repo",
+						"clientSecret": "d1452a54562f07d214c7bbc666641c0f652af332",
+						"clientId": "b6bad0cf86caa82be725",
+						"accessTokenUrl": "https://github.com/login/oauth/access_token",
+						"authUrl": "https://github.com/login/oauth/authorize",
+						"redirect_uri": "https://github.com",
+						"tokenName": "neha",
+						"addTokenTo": "header"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"neha-api-01\",\r\n    \"description\":\"api framework\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://api.github.com/user/repos"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "random",
+			"value": ""
+		}
+	]
+}
