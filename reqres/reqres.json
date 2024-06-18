@@ -107,7 +107,7 @@
 			"response": []
 		},
 		{
-			"name": "req4",
+			"name": "Request4",
 			"id": "7bceb681-3958-4e7f-a71d-baceb1075af1",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
