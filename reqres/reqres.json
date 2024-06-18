@@ -45,7 +45,7 @@
 			"response": []
 		},
 		{
-			"name": "req2",
+			"name": "Request2",
 			"event": [
 				{
 					"listen": "test",
